@@ -1,0 +1,56 @@
+body { font-size: 0.95rem; }
+main.container-fluid { max-width: 1400px; }
+.table td form { margin: 0; }
+.navbar .nav-link:hover { color: #fff; }
+
+/* 필수 입력 표시 */
+.form-label.required::after { content: " *"; color: var(--bs-danger); }
+/* 사용자 선택: 검색 칸 + select 한 줄(좋은 화면에서는 위아래로 쌓임) */
+.filter-group > .filter-input { flex: 0 0 6.5rem; width: 6.5rem; }
+.filter-group > select { flex: 1 1 0; min-width: 0; }
+@media (max-width: 575.98px) {
+  .filter-group { flex-wrap: wrap; }
+  .filter-group > .filter-input, .filter-group > select { flex: 1 1 100%; width: 100%; border-radius: var(--bs-border-radius) !important; }
+  .filter-group > .filter-input { margin-bottom: .25rem; }
+}
+
+/* 공통 표(.tbl-grid): 세로선, 가운데 정렬 헤더, 지연·미사용 행 표시 */
+.tbl-grid { --bs-table-bg: var(--bs-body-bg); border-collapse: separate; border-spacing: 0; border-top: 1px solid var(--bs-border-color); border-left: 1px solid var(--bs-border-color); }
+.tbl-grid > :not(caption) > * > * { border: 0; border-right: 1px solid var(--bs-border-color); border-bottom: 1px solid var(--bs-border-color); }
+.tbl-grid thead th { text-align: center; vertical-align: middle; background: var(--bs-tertiary-bg); font-weight: 600; white-space: nowrap; }
+.tbl-grid tbody tr.row-late { --bs-table-bg: var(--bs-danger-bg-subtle); }
+.tbl-grid tbody tr.row-inactive > td { opacity: .55; }
+.tbl-grid tbody tr.tbl-group > td { background: var(--bs-secondary-bg); font-weight: 600; text-align: left; }
+.tbl-title { display: inline-block; max-width: 26rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
+
+/* 리포트 표: 월간표 헤더·앞 두 열 고정 */
+.rpt-sec { scroll-margin-top: 1rem; }
+.rpt-grid > :not(caption) > * > * { white-space: nowrap; }
+.rpt-grid tbody tr.rpt-alt { --bs-table-bg: var(--bs-tertiary-bg); }
+.rpt-grid tbody tr.rpt-grp-start > * { border-top: 2px solid var(--bs-secondary-color); }
+.rpt-grid td.rpt-sum { font-weight: 600; background: var(--bs-secondary-bg); }
+.rpt-grid td.rpt-lead { font-weight: 600; }
+.rpt-grid tr.rpt-key > td { font-weight: 600; }
+.tbl-scroll { max-height: 75vh; overflow: auto; }
+.tbl-scroll thead th { position: sticky; top: 0; z-index: 3; }
+.rpt-grid .rpt-c1, .rpt-grid .rpt-c2 { position: sticky; z-index: 2; background: var(--bs-table-bg); }
+.rpt-grid .rpt-c1 { left: 0; min-width: 6rem; max-width: 6rem; }
+.rpt-grid .rpt-c2 { left: 6rem; min-width: 7rem; }
+.rpt-grid thead .rpt-c1, .rpt-grid thead .rpt-c2 { z-index: 4; background: var(--bs-tertiary-bg); }
+
+/* 다크 테마 보정(Bootstrap 5.3 data-bs-theme=dark) */
+[data-bs-theme="dark"] .navbar.bg-dark { background-color: #14171a !important; border-bottom: 1px solid var(--bs-border-color); }
+[data-bs-theme="dark"] .text-bg-dark { background-color: #495057 !important; }
+
+/* Quill 에디터 */
+[data-bs-theme="dark"] .ql-toolbar.ql-snow { background: var(--bs-tertiary-bg); border-color: var(--bs-border-color); }
+[data-bs-theme="dark"] .ql-container.ql-snow { border-color: var(--bs-border-color); }
+[data-bs-theme="dark"] .ql-editor { color: var(--bs-body-color); }
+[data-bs-theme="dark"] .ql-editor.ql-blank::before { color: var(--bs-secondary-color); }
+[data-bs-theme="dark"] .ql-snow .ql-stroke { stroke: var(--bs-body-color); }
+[data-bs-theme="dark"] .ql-snow .ql-fill { fill: var(--bs-body-color); }
+[data-bs-theme="dark"] .ql-snow .ql-picker { color: var(--bs-body-color); }
+[data-bs-theme="dark"] .ql-snow .ql-picker-options { background: var(--bs-body-bg); border-color: var(--bs-border-color); }
+[data-bs-theme="dark"] .ql-snow a { color: var(--bs-link-color); }
+[data-bs-theme="dark"] .ql-snow .ql-tooltip { background: var(--bs-body-bg); color: var(--bs-body-color); border-color: var(--bs-border-color); box-shadow: none; }
+[data-bs-theme="dark"] .ql-snow .ql-tooltip input[type=text] { background: var(--bs-body-bg); color: var(--bs-body-color); border-color: var(--bs-border-color); }

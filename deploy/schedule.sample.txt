@@ -1,0 +1,11 @@
+# SRMS 주기 작업 샘플
+
+## [Linux] crontab -e  (웹서버/PHP 실행 사용자 또는 srms 전용 계정으로)
+# 1시간마다: 기한/회신 독촉 적재 + 메일 발송·재시도
+0 * * * *   cd /srv/srms && /usr/bin/php bin/cron.php   >> storage/logs/cron.log 2>&1
+# 매일 02:30: DB 스냅샷 + 첨부 증분 복사 + 보관기간 정리
+30 2 * * *  cd /srv/srms && /usr/bin/php bin/backup.php >> storage/logs/backup.log 2>&1
+
+## [Windows] 작업 스케줄러 (관리자 PowerShell에서 한 번 실행; php.exe 경로는 환경에 맞게 수정)
+# schtasks /Create /TN "SRMS cron"   /SC HOURLY /MO 1 /RU SYSTEM /TR "cmd /c cd /d C:\srms && C:\php\php.exe bin\cron.php >> storage\logs\cron.log 2>&1"
+# schtasks /Create /TN "SRMS backup" /SC DAILY  /ST 02:30 /RU SYSTEM /TR "cmd /c cd /d C:\srms && C:\php\php.exe bin\backup.php >> storage\logs\backup.log 2>&1"

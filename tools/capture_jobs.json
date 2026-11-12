@@ -1,0 +1,19 @@
+[
+  {"name":"adm_users","role":"admin","path":"/admin/users","width":1100},
+  {"name":"adm_services","role":"admin","path":"/admin/services","width":1100},
+  {"name":"adm_service_edit","role":"admin","path":"/admin/services/1/edit","width":1100},
+  {"name":"adm_version_draft","role":"admin","path":"/admin/processes/1/versions/4","width":1100},
+  {"name":"adm_roles","role":"admin","path":"/admin/roles","width":1100},
+  {"name":"adm_codes","role":"admin","path":"/admin/codes","width":1100},
+  {"name":"adm_depts","role":"admin","path":"/admin/depts","width":1100},
+  {"name":"adm_processes","role":"admin","path":"/admin/processes","width":1100},
+  {"name":"adm_process_map","role":"admin","path":"/admin/process-map","width":1100},
+  {"name":"adm_mail_log","role":"admin","path":"/admin/mail-log","width":1100},
+  {"name":"adm_mail_templates","role":"admin","path":"/admin/mail-templates","width":1100},
+  {"name":"it_logs","role":"it1","path":"/logs","width":1100},
+  {"name":"it_all_list","role":"it1","path":"/requests?scope=all","width":1100},
+  {"name":"it_report","role":"it1","path":"/reports?tab=monthly","width":1280},
+  {"name":"biz_dept_list","role":"bizit1","path":"/requests?scope=dept","width":1100},
+  {"name":"biz_report","role":"bizit1","path":"/reports?tab=monthly","width":1280},
+  {"name":"req_list","role":"req1","path":"/requests","width":1100}
+]

@@ -1,0 +1,13 @@
+.tools/
+.env
+/storage/db/*
+/storage/attachments/*
+/storage/logs/*
+/storage/backup/*
+/storage/mail/*
+/storage/cron.lock
+!/storage/**/.gitkeep
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+__pycache__/

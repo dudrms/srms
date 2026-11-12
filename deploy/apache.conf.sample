@@ -1,0 +1,53 @@
+# SRMS Apache 2.4 설정 샘플. 경로/소켓은 환경에 맞게 수정하세요.
+# - .htaccess 에 의존하지 않습니다(FallbackResource 사용). mod_rewrite 불필요.
+# - 웹루트는 반드시 public/ 입니다. index.php 외의 .php 는 실행하지 않습니다.
+# - 필요 모듈: mod_ssl, mod_headers(선택), mod_proxy_fcgi(PHP-FPM 사용 시) 또는 mod_php
+
+<VirtualHost *:443>
+    ServerName srms.example.com
+    DocumentRoot /srv/srms/public
+    ServerTokens Prod
+    ServerSignature Off
+
+    SSLEngine on
+    SSLCertificateFile    /etc/ssl/srms/fullchain.pem
+    SSLCertificateKeyFile /etc/ssl/srms/privkey.pem
+
+    # 첨부 업로드 상한(php.ini post_max_size 와 맞출 것)
+    LimitRequestBody 67108864
+
+    <Directory /srv/srms/public>
+        Options -Indexes -MultiViews
+        AllowOverride None
+        Require all granted
+        DirectoryIndex index.php
+        FallbackResource /index.php
+    </Directory>
+
+    # index.php 만 PHP 로 실행하고 나머지 .php 는 차단
+    <FilesMatch "\.php$">
+        Require all denied
+    </FilesMatch>
+    <Files "index.php">
+        Require all granted
+        # PHP-FPM 사용 시(mod_php 를 쓰면 이 줄은 삭제)
+        SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost"
+    </Files>
+
+    # 숨김 파일 차단
+    <FilesMatch "^\.">
+        Require all denied
+    </FilesMatch>
+
+    <Directory /srv/srms/public/assets>
+        <IfModule mod_expires.c>
+            ExpiresActive On
+            ExpiresDefault "access plus 7 days"
+        </IfModule>
+    </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName srms.example.com
+    Redirect permanent / https://srms.example.com/
+</VirtualHost>

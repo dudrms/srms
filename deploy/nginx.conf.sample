@@ -1,0 +1,49 @@
+# SRMS Nginx 설정 샘플 (PHP-FPM). 경로/소켓은 환경에 맞게 수정하세요.
+# - 웹루트는 반드시 public/ 입니다(app/, storage/, .env, database/ 는 외부에 노출되지 않아야 함).
+# - index.php 외의 .php 는 실행하지 않습니다.
+
+server {
+    listen 443 ssl;
+    server_name srms.example.com;
+
+    ssl_certificate     /etc/ssl/srms/fullchain.pem;
+    ssl_certificate_key /etc/ssl/srms/privkey.pem;
+
+    root /srv/srms/public;
+    index index.php;
+    server_tokens off;
+
+    # 첨부 업로드: 파일당 20MB(기본), 한 번에 여러 개 올릴 수 있으므로 여유를 둔다(php.ini post_max_size 와 맞출 것)
+    client_max_body_size 64m;
+
+    # 존재하지 않는 경로는 모두 프런트 컨트롤러로
+    location / {
+        try_files $uri /index.php?$query_string;
+    }
+
+    location = /index.php {
+        include fastcgi_params;
+        fastcgi_pass unix:/run/php/php-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_read_timeout 60s;
+    }
+
+    # 다른 .php 는 실행 금지
+    location ~ \.php$ { return 404; }
+
+    # 숨김 파일 차단(.well-known 제외)
+    location ~ /\.(?!well-known) { deny all; }
+
+    # 정적 자원 캐시(로컬 번들 라이브러리)
+    location /assets/ {
+        try_files $uri =404;
+        expires 7d;
+        add_header Cache-Control "public";
+    }
+}
+
+server {
+    listen 80;
+    server_name srms.example.com;
+    return 301 https://$host$request_uri;
+}

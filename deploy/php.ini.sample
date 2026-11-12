@@ -1,0 +1,35 @@
+; SRMS 권장 php.ini 설정(php.ini 또는 conf.d/90-srms.ini 에 반영). CLI(cron/backup)와 웹 모두에 적용됩니다.
+; 필수 확장: pdo_sqlite, sqlite3, mbstring, fileinfo, openssl, ctype, filter, hash (선택: intl)
+
+expose_php = Off
+display_errors = Off
+display_startup_errors = Off
+log_errors = On
+error_log = /srv/srms/storage/logs/php-error.log
+
+date.timezone = Asia/Seoul
+memory_limit = 256M
+max_execution_time = 60
+
+; 첨부: 파일당 20MB(기본 정책) / 한 요청 최대 64MB (웹서버 설정과 맞출 것)
+file_uploads = On
+upload_max_filesize = 20M
+post_max_size = 64M
+max_file_uploads = 20
+
+allow_url_fopen = Off
+allow_url_include = Off
+disable_functions = exec,shell_exec,system,passthru,proc_open,popen,show_source
+
+; 세션(앱이 쿠키 속성을 직접 지정하지만 기본값도 안전하게)
+session.use_strict_mode = 1
+session.use_only_cookies = 1
+session.cookie_httponly = 1
+session.cookie_samesite = Lax
+; HTTPS 에서만 운영한다면 1 (앱은 HTTPS 요청이면 자동으로 Secure 를 붙입니다)
+session.cookie_secure = 1
+; 세션 파일을 앱 전용 디렉터리에 두려면(선택) 디렉터리를 만든 뒤 주석을 푸세요
+; session.save_path = /srv/srms/storage/sessions
+
+opcache.enable = 1
+opcache.validate_timestamps = 1
